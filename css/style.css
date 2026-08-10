@@ -5,10 +5,10 @@
   --line: #2B303C;
   --text: #F1F0EA;
   --text-dim: #9096A5;
-  --eendrag: #C8443C;
-  --eendrag-dim: #7A2C27;
-  --helshoogte: #D9A441;
-  --helshoogte-dim: #8A6A2A;
+  --eendrag: #FFA500;
+  --eendrag-dim: ##A36A00;
+  --helshoogte: #4E83DF;
+  --helshoogte-dim: #2F9C19;
   --accent-live: #4CAF6D;
   --radius: 10px;
   --font-display: 'Archivo Black', sans-serif;
@@ -240,8 +240,8 @@ main { max-width: 720px; margin: 0 auto; padding: 16px; }
   border: 1px solid var(--line);
   color: var(--text-dim);
 }
-.badge-heavy { color: var(--eendrag); border-color: var(--eendrag-dim); }
-.badge-medium { color: var(--helshoogte); border-color: var(--helshoogte-dim); }
+.badge-heavy { color: #ED0C0C; border-color: #9B0808; }
+.badge-medium { color: #3AC21F; border-color: #2F9C19; }
 .badge-light { color: var(--text-dim); }
 .badge-live { color: var(--accent-live); border-color: var(--accent-live); animation: pulse 1.6s infinite; }
 .badge-winner-eendrag { color: var(--eendrag); border-color: var(--eendrag); }
