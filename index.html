@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derby 2026 — Eendrag vs Helshoogte</title>
+<meta name="theme-color" content="#12151C">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">D26</span>
+      <span class="brand-name">Derby 2026</span>
+    </div>
+    <div class="topbar-actions">
+      <button id="notif-btn" class="btn btn-ghost" type="button">🔔 Notify me</button>
+      <button id="admin-btn" class="btn btn-ghost" type="button">Admin</button>
+    </div>
+  </div>
+</header>
+
+<section class="scoreboard" aria-label="Live scoreboard">
+  <div class="scoreboard-inner">
+    <div class="team-score team-a">
+      <span class="team-name" id="team-a-name">Eendrag</span>
+      <span class="team-points" id="team-a-points">0</span>
+    </div>
+    <div class="score-meter" aria-hidden="true">
+      <div class="score-meter-track">
+        <div class="score-meter-fill" id="meter-a"></div>
+        <div class="score-meter-fill meter-b" id="meter-b"></div>
+      </div>
+      <div class="score-meter-label" id="pool-label">0 of 0 points decided</div>
+    </div>
+    <div class="team-score team-b">
+      <span class="team-name" id="team-b-name">Helshoogte</span>
+      <span class="team-points" id="team-b-points">0</span>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab active" data-view="schedule" role="tab" aria-selected="true">Schedule</button>
+  <button class="tab" data-view="leaderboard" role="tab" aria-selected="false">Leaderboard</button>
+</nav>
+
+<main id="main">
+  <section id="view-schedule" class="view active">
+    <nav class="day-tabs" id="day-tabs" aria-label="Days"></nav>
+    <div id="event-list" class="event-list"></div>
+  </section>
+
+  <section id="view-leaderboard" class="view">
+    <div class="leaderboard-wrap">
+      <h2 class="section-title">Points by day</h2>
+      <div id="day-breakdown" class="day-breakdown"></div>
+      <h2 class="section-title">Results log</h2>
+      <div id="results-log" class="results-log"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Admin login modal -->
+<div id="admin-modal" class="modal-backdrop hidden">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+    <h2 id="admin-modal-title">Admin login</h2>
+    <p class="modal-sub">Sign in to edit events, times, venues and results.</p>
+    <label class="field-label" for="admin-email">Email</label>
+    <input id="admin-email" class="field-input" type="email" autocomplete="username" placeholder="admin@derby2026.app">
+    <label class="field-label" for="admin-password">Password</label>
+    <input id="admin-password" class="field-input" type="password" autocomplete="current-password" placeholder="Password">
+    <p id="admin-error" class="field-error hidden"></p>
+    <div class="modal-actions">
+      <button id="admin-cancel" class="btn btn-ghost" type="button">Cancel</button>
+      <button id="admin-submit" class="btn btn-primary" type="button">Log in</button>
+    </div>
+  </div>
+</div>
+
+<!-- Event edit modal -->
+<div id="edit-modal" class="modal-backdrop hidden">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <h2 id="edit-modal-title">Edit event</h2>
+    <label class="field-label" for="edit-name">Event name</label>
+    <input id="edit-name" class="field-input" type="text">
+    <div class="field-row">
+      <div>
+        <label class="field-label" for="edit-date">Date</label>
+        <input id="edit-date" class="field-input" type="date">
+      </div>
+      <div>
+        <label class="field-label" for="edit-time">Time</label>
+        <input id="edit-time" class="field-input" type="time">
+      </div>
+    </div>
+    <label class="field-label" for="edit-venue">Venue</label>
+    <input id="edit-venue" class="field-input" type="text">
+    <label class="field-label" for="edit-weight">Weight class / points</label>
+    <select id="edit-weight" class="field-input">
+      <option value="">— No points (informational) —</option>
+      <option value="light">Light — 10 pts</option>
+      <option value="medium">Medium — 17.5 pts</option>
+      <option value="heavy">Heavy — 25 pts</option>
+    </select>
+    <label class="field-label" for="edit-winner">Result</label>
+    <select id="edit-winner" class="field-input">
+      <option value="">Not yet decided</option>
+      <option value="eendrag">Eendrag win</option>
+      <option value="helshoogte">Helshoogte win</option>
+      <option value="split">Split / tie</option>
+    </select>
+    <p id="edit-error" class="field-error hidden"></p>
+    <div class="modal-actions">
+      <button id="edit-cancel" class="btn btn-ghost" type="button">Cancel</button>
+      <button id="edit-save" class="btn btn-primary" type="button">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<div id="admin-banner" class="admin-banner hidden">
+  Admin mode — you can edit any event · <button id="admin-logout" class="link-btn" type="button">Log out</button>
+</div>
+
+<!-- Firebase (compat build keeps this file dependency-free to load via <script>) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-messaging-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

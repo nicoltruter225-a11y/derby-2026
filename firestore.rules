@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Anyone can view events and the schedule — nobody but the signed-in
+    // admin account can create, edit, or delete them.
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Anyone can subscribe themselves to push notifications by writing their
+    // own device token. Tokens can't be read back by clients (only the
+    // Cloud Function, using the admin SDK, can read this collection) and
+    // can't be edited or deleted by other clients once created.
+    match /subscribers/{tokenId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
