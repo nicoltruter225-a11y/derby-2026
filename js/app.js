@@ -319,35 +319,6 @@ document.getElementById("edit-save").addEventListener("click", async () => {
   }
 });
 
-// ---------------------------------------------------------------------------
-// Notifications (Firebase Cloud Messaging)
-// ---------------------------------------------------------------------------
-document.getElementById("notif-btn").addEventListener("click", async () => {
-  if (!("Notification" in window)) {
-    toast("This browser doesn't support notifications.");
-    return;
-  }
-  try {
-    const permission = await Notification.requestPermission();
-    if (permission !== "granted") {
-      toast("Notifications weren't enabled.");
-      return;
-    }
-    const registration = await navigator.serviceWorker.register("service-worker.js");
-    const messaging = firebase.messaging();
-    const token = await messaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: registration });
-    if (token) {
-      await db.collection("subscribers").doc(token).set({ token, createdAt: new Date().toISOString() });
-      toast("You'll get a notification when each event starts.");
-    }
-    messaging.onMessage(payload => {
-      toast(`${payload.notification?.title || "Event starting"}: ${payload.notification?.body || ""}`);
-    });
-  } catch (err) {
-    console.error(err);
-    toast("Couldn't enable notifications — see console for details.");
-  }
-});
 
 // ---------------------------------------------------------------------------
 // Init
