@@ -174,7 +174,7 @@ button, input, select {
   cursor: pointer;
   border-bottom: 2px solid transparent;
 }
-.tab.active { color: var(--text); border-bottom-color: var(--helshoogte); }
+.tab.active { color: var(--text); border-bottom-color: #FFFFFF; }
 
 main { max-width: 720px; margin: 0 auto; padding: 16px; }
 .view { display: none; }
@@ -354,7 +354,7 @@ main { max-width: 720px; margin: 0 auto; padding: 16px; }
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--helshoogte);
+  background: var(--eendrag);
   color: #1A1200;
   text-align: center;
   padding: 10px;
