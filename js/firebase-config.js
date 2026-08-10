@@ -15,7 +15,6 @@ const firebaseConfig = {
 
 // Get this from: Firebase Console → Project Settings → Cloud Messaging →
 // Web configuration → Generate key pair
-const FCM_VAPID_KEY = "BBBwM5N2Lj1I9M8dOae5dvRpjZy-fjicdXRubttgGpSdEv6l7pNYa1IpQPuvEe5yY6dYloA_pVxN4JLOKxcKXbQ";
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
