@@ -16,6 +16,10 @@
 
 <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
 
+  <div id="splash-overlay" class="splash-overlay">
+  <img src="assets/splash.gif" alt="Derby 2026" class="splash-gif">
+</div>
+  
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
@@ -29,6 +33,11 @@
 </header>
 
 <section class="scoreboard" aria-label="Live scoreboard">
+  
+  <div id="winner-banner" class="winner-banner hidden">
+    <span id="winner-text"></span>
+  </div>
+  
   <div class="scoreboard-inner">
     <div class="team-score team-a">
       <span class="team-name" id="team-a-name">Eendrag</span>
