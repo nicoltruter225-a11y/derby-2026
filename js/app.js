@@ -56,6 +56,20 @@ function renderScoreboard() {
   document.getElementById("meter-a").style.width = ((eendrag / total) * 100).toFixed(1) + "%";
   document.getElementById("meter-b").style.width = ((helshoogte / total) * 100).toFixed(1) + "%";
   document.getElementById("pool-label").textContent = `${decided} of ${TOTAL_POOL} points decided`;
+
+  // Winner banner
+  const banner = document.getElementById("winner-banner");
+  const bannerText = document.getElementById("winner-text");
+  const half = TOTAL_POOL / 2;
+  if (eendrag > half) {
+    bannerText.textContent = `${TEAMS.eendrag.name.toUpperCase()} WINS!`;
+    banner.classList.remove("hidden");
+  } else if (helshoogte > half) {
+    bannerText.textContent = `${TEAMS.helshoogte.name.toUpperCase()} WINS!`;
+    banner.classList.remove("hidden");
+  } else {
+    banner.classList.add("hidden");
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -317,6 +331,18 @@ document.getElementById("edit-save").addEventListener("click", async () => {
     errEl.textContent = "Couldn't save — check your connection and admin access.";
     errEl.classList.remove("hidden");
   }
+});
+
+// ---------------------------------------------------------------------------
+// Splash gif — shows for 3 seconds on load, then fades out
+// ---------------------------------------------------------------------------
+window.addEventListener("load", () => {
+  const splash = document.getElementById("splash-overlay");
+  if (!splash) return;
+  setTimeout(() => {
+    splash.classList.add("fade-out");
+    setTimeout(() => splash.remove(), 600);
+  }, 3000);
 });
 
 
